@@ -1,0 +1,63 @@
+@model TrainingSystem.ViewModels.InstructorVM
+
+@{
+    ViewData["Title"] = "Edit Instructor";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+   @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="LinkedInUrl" class="form-label"></label>
+        <input asp-for="LinkedInUrl" class="form-control" />
+        <span asp-validation-for="LinkedInUrl" class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Salary" class="form-label"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Deptid" class="form-label"></label>
+        <select asp-for="Deptid" asp-items="@(new SelectList(Model.Departments, "Id", "Name", Model.Deptid))" class="form-select">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+
+     <div class="mb-3">
+        <label asp-for="CourseId" class="form-label"></label>
+        <select asp-for="CourseId" asp-items="@(new SelectList(Model.courses, "Id", "Name", Model.CourseId))" class="form-select">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Image))
+    {
+        <div class="mb-3">
+            <img src="~/images/@Model.Image" width="100" class="rounded" />
+        </div>
+    }
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>

@@ -1,0 +1,35 @@
+@model IEnumerable<TrainingSystem.Models.crsResult>
+
+@{
+    ViewData["Title"] = "Course Results";
+}
+
+<h2>Course Results</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Result</a>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Trainee</th>
+            <th>Course</th>
+            <th>Degree</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var result in Model)
+        {
+            <tr>
+                <td>@result.trainee?.Name</td>
+                <td>@result.course?.Name</td>
+                <td>@result.Degree</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@result.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@result.Id" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this result?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

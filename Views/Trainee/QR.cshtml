@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "QR Code";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center shadow rounded-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-qr-code-scan"></i> QR Code for @ViewBag.Name</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.QRImage != null)
+                    {
+                        <p class="lead">Scan this QR code to verify the trainee's data.</p>
+                        <img src="@ViewBag.QRImage" class="img-fluid mb-3 border border-3 border-dark rounded" style="max-width: 300px;" alt="QR Code" />
+                    }
+                    else
+                    {
+                        <p class="text-danger">No QR Code found.</p>
+                    }
+
+                    <a href="/" class="btn btn-outline-primary mt-3">
+                        <i class="bi bi-house-door"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

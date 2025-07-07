@@ -1,0 +1,117 @@
+@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center">
+                    <h4 class="mb-0">Create Your Account</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Register" method="post" enctype="multipart/form-data">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="mb-3">
+                            <label asp-for="Role" class="form-label">Register As:</label>
+                            <select asp-for="Role" class="form-select" id="roleSelector">
+                                <option value="">-- Select Role --</option>
+                                <option value="Trainee">Trainee</option>
+                                <option value="Instructor">Instructor</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+
+                        <!-- Shared: Address -->
+                        <div class="mb-3 ">
+                            <label asp-for="Address" class="form-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <!-- Department -->
+                        <div class="mb-3 ">
+                            <label asp-for="DeptID" class="form-label">Department</label>
+                            <select asp-for="DeptID" class="form-select">
+                                <option value="">-- Select Department --</option>
+                                @foreach (var dept in Model.Departments ?? new List<Department>())
+                                {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="DeptID" class="text-danger"></span>
+                        </div>
+
+                        <!-- Trainee Fields -->
+                        <div class="trainee">
+                            <div class="mb-3">
+                                <label asp-for="Grade" class="form-label"></label>
+                                <input asp-for="Grade" class="form-control" />
+                                <span asp-validation-for="Grade" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Instructor Fields -->
+                        @* <div class="instructor"> *@
+                            <div class="mb-3">
+                                <label asp-for="ImageFile" class="form-label">Profile Image</label>
+                                <input asp-for="ImageFile" type="file" class="form-control" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            </div>
+                        @* </div> *@
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <small>Already have an account? <a asp-action="Login">Login here</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function toggleRoleFields() {
+            const role = document.getElementById("roleSelector").value;
+            document.querySelectorAll(".trainee").forEach(el => el.style.display = (role === "Trainee") ? "block" : "none");
+            document.querySelectorAll(".instructor").forEach(el => el.style.display = (role === "Instructor") ? "block" : "none");
+        }
+
+        document.getElementById("roleSelector").addEventListener("change", toggleRoleFields);
+        window.onload = toggleRoleFields;
+    </script>
+}

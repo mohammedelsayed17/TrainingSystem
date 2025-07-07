@@ -1,0 +1,45 @@
+@model TrainingSystem.ViewModels.CrsResultVM
+
+@{
+    ViewData["Title"] = "Add Course Result";
+}
+
+<h2>Add Course Result</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="TraineeId" class="form-label"></label>
+        <select asp-for="TraineeId" class="form-control">
+             <option value="">-- Select Trainee --</option>
+             @foreach (var trainee in Model.Trainees)
+                        {
+                                <option value="@trainee.Id">
+                                 @trainee.Name (@trainee.Id)
+                            </option>
+                     }               
+            </select>
+
+        <span asp-validation-for="TraineeId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CourseId" class="form-label"></label>
+        <select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
+            <option value="">-- Select Course --</option>
+        </select>
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Degree" class="form-label"></label>
+        <input asp-for="Degree" class="form-control" />
+        <span asp-validation-for="Degree" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

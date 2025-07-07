@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 mb-3 text-primary fw-bold">Welcome to the Training System</h1>
+            <p class="lead mb-4 text-secondary">
+                A smart way to manage your Instructors, Trainees, Courses, and Results.
+            </p>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="mb-4">You're logged in as <strong>@User.Identity.Name</strong>.</p>
+                <a class="btn btn-primary btn-lg" asp-controller="Dashboard" asp-action="Index">
+                    <i class="bi bi-speedometer2"></i> Go to Dashboard
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-outline-primary btn-lg me-2" asp-controller="Account" asp-action="Login">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+                <a class="btn btn-outline-secondary btn-lg" asp-controller="Account" asp-action="Register">
+                    <i class="bi bi-person-plus"></i> Register
+                </a>
+            }
+        </div>
+
+        <div class="col-md-6 text-center">
+            <img src="~/images/picture2.jpg" alt="Training System"
+                 class="img-fluid rounded-4 shadow" style="max-height: 400px;" />
+        </div>
+    </div>
+</div>

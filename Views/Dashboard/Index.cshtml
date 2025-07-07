@@ -1,0 +1,45 @@
+@model TrainingSystem.ViewModels.DashboardVM
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4"><i class="bi bi-speedometer2"></i> System Dashboard</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-info shadow-lg rounded-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-person-badge"></i> Instructors</h5>
+                    <h3>@Model.InstructorCount</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow-lg rounded-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-people-fill"></i> Trainees</h5>
+                    <h3>@Model.TraineeCount</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning shadow-lg rounded-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title"><i class="bi bi-journal-code"></i> Courses</h5>
+                    <h3>@Model.CourseCount</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <h4 class="mb-3"><i class="bi bi-bar-chart-steps"></i> Grades Summary</h4>
+    <ul class="list-group list-group-flush mb-5">
+        <li class="list-group-item"><strong>Average Degree:</strong> @Model.AverageDegree</li>
+        <li class="list-group-item"><strong>Max Degree:</strong> @Model.MaxDegree</li>
+        <li class="list-group-item"><strong>Min Degree:</strong> @Model.MinDegree</li>
+    </ul>
+</div>

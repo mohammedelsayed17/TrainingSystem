@@ -1,0 +1,40 @@
+@model TrainingSystem.ViewModels.CrsResultVM
+
+@{
+    ViewData["Title"] = "Edit Course Result";
+}
+
+<h2>Edit Course Result</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="TraineeId" class="form-label"></label>
+        <select asp-for="TraineeId" class="form-control" asp-items="@(new SelectList(Model.Trainees, "Id", "Name", Model.TraineeId))">
+            <option value="">-- Select Trainee --</option>
+        </select>
+        <span asp-validation-for="TraineeId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CourseId" class="form-label"></label>
+        <select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(Model.Courses, "Id", "Name", Model.CourseId))">
+            <option value="">-- Select Course --</option>
+        </select>
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Degree" class="form-label"></label>
+        <input asp-for="Degree" class="form-control" />
+        <span asp-validation-for="Degree" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

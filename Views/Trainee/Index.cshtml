@@ -1,0 +1,52 @@
+@model IEnumerable<TrainingSystem.Models.Trainee>
+
+@{
+    ViewData["Title"] = "Trainees List";
+}
+
+<h2>Trainees</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">+ Add New Trainee</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Grade</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var trainee in Model)
+    {
+        <tr>
+            <td>
+                @if (!string.IsNullOrEmpty(trainee.ImageUrl))
+                {
+                    <img src="~/images/@trainee.ImageUrl" width="80" class="rounded" />
+                }
+                else
+                {
+                    <span>No Image</span>
+                }
+            </td>
+            <td>@trainee.Name</td>
+            <td>@trainee.Address</td>
+            <td>@trainee.Grade</td>
+            <td>@trainee.Department?.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@trainee.Id" class="btn btn-sm btn-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@trainee.Id" class="btn btn-sm btn-danger">Delete</a>
+                <a asp-action="QRById" asp-route-id="@trainee.Id" class="btn btn-sm btn-primary">trainee Details</a>
+            
+               <a asp-action="GeneratePdf" asp-route-id="@trainee.Id" class="btn btn-sm btn-outline-primary">Download Certificate</a>
+
+                
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
