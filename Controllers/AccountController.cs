@@ -158,7 +158,7 @@ namespace TrainingSystem.Controllers
                         else if (roles.Contains("Instructor"))
                             return RedirectToAction("Index", "Course");
                         else
-                            return RedirectToAction("QR", "Trainee");
+                            return RedirectToAction("MyCourses", "CrsResult");
                     }
 
                 }

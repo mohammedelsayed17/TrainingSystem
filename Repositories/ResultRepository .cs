@@ -11,7 +11,7 @@ namespace TrainingSystem.Repositories
 {
     public class ResultRepository : IResultRepository
     {
-         private readonly AppDbContext context;
+        private readonly AppDbContext context;
 
         public ResultRepository(AppDbContext context)
         {
@@ -22,17 +22,22 @@ namespace TrainingSystem.Repositories
             await context.crsResults.AddAsync(entity);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await GetByIdAsync(id);
+            if (result != null)
+            {
+                context.crsResults.Remove(result);
+              
+            }
         }
 
         public async Task<IEnumerable<crsResult>> GetAllAsync()
         {
-              return await context.crsResults
-                .Include(r => r.course)
-                .Include(r => r.trainee)
-                .ToListAsync();
+            return await context.crsResults
+              .Include(r => r.course)
+              .Include(r => r.trainee)
+              .ToListAsync();
         }
 
         public async Task<crsResult?> GetByIdAsync(int id)
@@ -45,12 +50,12 @@ namespace TrainingSystem.Repositories
 
         public async Task SaveChangesAsync()
         {
-             await  context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(crsResult entity)
         {
-             context.crsResults.Update(entity);
+            context.crsResults.Update(entity);
         }
     }
 }

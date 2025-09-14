@@ -212,3 +212,4 @@ E:\TrainingSystem\obj\Debug\net9.0\win-x64\TrainingSystem.pdb
 E:\TrainingSystem\obj\Debug\net9.0\win-x64\TrainingSystem.genruntimeconfig.cache
 E:\TrainingSystem\obj\Debug\net9.0\win-x64\ref\TrainingSystem.dll
 E:\TrainingSystem\obj\Debug\net9.0\win-x64\compressed\sddl20ttq2-3xvbb3ab0j.gz
+E:\TrainingSystem\obj\Debug\net9.0\win-x64\TrainingSystem.sourcelink.json

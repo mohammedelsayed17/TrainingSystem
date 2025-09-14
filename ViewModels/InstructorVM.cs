@@ -25,7 +25,7 @@ namespace TrainingSystem.ViewModels
         [Display(Name = "Department")]
         public int Deptid { get; set; }
         public IEnumerable<Department>? Departments { get; set; }
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
           public IEnumerable<Course>? courses { get; set; }
         // public List<Course>? Courses { get;  set; }
         public IFormFile? ImageFile { get; set; }

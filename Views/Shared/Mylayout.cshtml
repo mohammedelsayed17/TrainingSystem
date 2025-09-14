@@ -53,8 +53,11 @@
                             }
                             else if (User.IsInRole("Trainee"))
                             {
+                                <li class="nav-item"><a class="nav-link" asp-controller="CrsResult" asp-action="MyCourses"><i class="bi bi-journal-text"></i> My Courses</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Trainee" asp-action="AddCourse"><i class="bi bi-file-earmark-bar-graph"></i> Add Cours</a></li>
                                 <li class="nav-item"><a class="nav-link" asp-controller="Trainee" asp-action="QR"><i class="bi bi-qr-code-scan"></i> QR Code</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="CrsResult" asp-action="Index"><i class="bi bi-file-earmark-bar-graph"></i> My Results</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Course" asp-action="CourseCard"><i class="bi bi-file-earmark-pdf"></i> Courses </a></li>
+                                
                             }
 
                             <li class="nav-item">

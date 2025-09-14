@@ -10,7 +10,7 @@ namespace TrainingSystem.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {
-         AppDbContext context;
+        AppDbContext context;
         public DepartmentRepository(AppDbContext context)
         {
             this.context = context;
@@ -32,17 +32,17 @@ namespace TrainingSystem.Repositories
 
         public async Task<IEnumerable<Department>> GetAllAsync()
         {
-             return await context.Departments.ToListAsync();
+            return await context.Departments.ToListAsync();
         }
 
         public async Task<Department> GetByIdAsync(int id)
         {
-             return await context.Departments.FirstOrDefaultAsync(d => d.Id == id);
+            return await context.Departments.FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task SaveChangesAsync()
         {
-           await  context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Department entity)
@@ -50,9 +50,12 @@ namespace TrainingSystem.Repositories
             var existingDepartment = await GetByIdAsync(entity.Id);
             if (existingDepartment != null)
             {
-             context.Departments.Update(entity);
+                existingDepartment.Name = entity.Name;
+                existingDepartment.Manager = entity.Manager;
+                // If you want to update other properties, do it here
+                //  context.Departments.Update(entity);
             }
-           
+
         }
     }
 }

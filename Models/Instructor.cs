@@ -17,7 +17,7 @@ namespace TrainingSystem.Models
         [ForeignKey("Department")]
         public int Deptid { get; set; }
         [ForeignKey("Course")]
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
         public Department Department { get; set; }
         public Course? Course { get; set; }
         public string? UserId { get; set; }

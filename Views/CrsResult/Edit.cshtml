@@ -11,9 +11,16 @@
 
     <div class="mb-3">
         <label asp-for="TraineeId" class="form-label"></label>
-        <select asp-for="TraineeId" class="form-control" asp-items="@(new SelectList(Model.Trainees, "Id", "Name", Model.TraineeId))">
-            <option value="">-- Select Trainee --</option>
-        </select>
+        <select asp-for="TraineeId" class="form-control">
+             <option value="">-- Select Trainee --</option>
+             @foreach (var trainee in Model.Trainees)
+                        {
+                                <option value="@trainee.Id">
+                                 @trainee.Name (@trainee.Id)
+                            </option>
+                     }               
+            </select>
+
         <span asp-validation-for="TraineeId" class="text-danger"></span>
     </div>
 

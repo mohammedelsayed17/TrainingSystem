@@ -25,14 +25,24 @@ namespace TrainingSystem.Repositories
 
         public async Task DeleteAsync(int id)
         {
-             var trainee = await GetByIdAsync(id);
-        if (trainee != null)
+            var trainee = await context.Trainees
+       .Include(t => t.CrsResults)
+       .FirstOrDefaultAsync(t => t.Id == id);
+            //  var trainee = await GetByIdAsync(id);
+            if (trainee == null) return;
+            // context.Trainees.Remove(trainee);
+            context.crsResults.RemoveRange(trainee.CrsResults);
             context.Trainees.Remove(trainee);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == trainee.UserId);
+            if (user != null)
+                context.Users.Remove(user);
+
+
         }
 
         public async Task<IEnumerable<Trainee>> GetAllAsync()
         {
-           return await context.Trainees.Include(t => t.Department).ToListAsync();
+            return await context.Trainees.Include(t => t.Department).ToListAsync();
         }
 
         public async Task<Trainee> GetByIdAsync(int id)
@@ -42,12 +52,12 @@ namespace TrainingSystem.Repositories
 
         public async Task SaveChangesAsync()
         {
-              await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Trainee entity)
         {
-              context.Trainees.Update(entity);
+            context.Trainees.Update(entity);
         }
     }
 }

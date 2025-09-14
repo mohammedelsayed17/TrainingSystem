@@ -12,7 +12,7 @@ using TrainingSystem.ViewModels;
 
 namespace TrainingSystem.Controllers
 {
-[Authorize(Roles = "Admin,Instructor")]
+// [Authorize(Roles = "Admin,Instructor")]
     public class CourseController : Controller
     {
         private readonly CourseService service;
@@ -27,11 +27,18 @@ namespace TrainingSystem.Controllers
             var courses = await service.GetAllAsync();
             return View("Index", courses);
         }
+         public async Task<IActionResult> CourseCard()
+        {
+            var courses = await service.GetAllAsync();
+            return View("CourseCard", courses);
+        }
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Create()
         {
             var vm = await service.PrepareVMAsync();
             return View("Create", vm);
-        }
+        }   
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public async Task<IActionResult> Create(CourseVM vm)
         {
@@ -44,12 +51,14 @@ namespace TrainingSystem.Controllers
             await service.AddAsync(vm);
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Edit(int id)
         {
             var vm = await service.GetByIdAsync(id);
             if (vm == null) return NotFound();
             return View("Edit", vm);
         }
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public async Task<IActionResult> Edit(CourseVM vm)
         {
@@ -62,6 +71,7 @@ namespace TrainingSystem.Controllers
             await service.UpdateAsync(vm);
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Delete(int id)
         {
             await service.DeleteAsync(id);
@@ -77,7 +87,7 @@ namespace TrainingSystem.Controllers
 
             return View("Details", course);
         }
-
+       
         public async Task<IActionResult> GeneratePdf(int id)
         {
             var course = await service.GetByIdAsync(id); // أو mapping إلى CourseVM

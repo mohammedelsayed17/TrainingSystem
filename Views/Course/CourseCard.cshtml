@@ -1,0 +1,27 @@
+@model IEnumerable<TrainingSystem.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h2>Available Courses</h2>
+
+<div class="row">
+    @foreach (var course in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@course.Name</h5>
+                    <p class="card-text">
+                        <strong>Degree:</strong> @course.Degree<br />
+                        <strong>Min Degree:</strong> @course.MinDegree<br />
+                        <strong>Department:</strong> @course.Department?.Name<br/>
+                        <a asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary mt-2">View Details</a><br />
+                        <a asp-controller="Course" asp-action="GeneratePdf" asp-route-id="@course.Id" class="btn btn-success mt-2">Download PDF</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

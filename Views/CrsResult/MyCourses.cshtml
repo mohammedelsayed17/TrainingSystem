@@ -1,0 +1,47 @@
+@model IEnumerable<TrainingSystem.Models.crsResult>
+
+@{
+    ViewData["Title"] = "My Course Results";
+}
+
+<h2>My Course Results</h2>
+@if (Model.Any())
+{
+    <h4>Welcome, @Model.First().trainee?.Name</h4>
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Course</th>
+            <th>Degree</th>
+            <th>Certificate</th>
+            @* <th>Course Pdf </th> *@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var result in Model)
+        {
+            <tr>
+                <td>@result.course?.Name</td>
+                <td>@result.Degree</td>
+                <td>
+                    <a asp-controller="Trainee"
+                       asp-action="GeneratePdf"
+                       asp-route-id="@result.Id"
+                       class="btn btn-success btn-sm">
+                        Download Certificate
+                    </a>
+                </td>
+                @* <td>
+                    <a asp-controller="Course"
+                       asp-action="GeneratePdf"
+                       asp-route-id="@result.Id"
+                       class="btn btn-success btn-sm">
+                         Download Course PDF
+                    </a>
+                </td> *@
+            </tr>
+        }
+    </tbody>
+</table>

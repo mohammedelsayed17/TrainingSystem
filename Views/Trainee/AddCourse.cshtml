@@ -1,0 +1,11 @@
+@model AddCourseVM
+
+<h2>Add Course</h2>
+
+<form asp-action="AddCourse" method="post">
+    <div class="form-group">
+        <label>Select a Course</label>
+        <select asp-for="CourseId" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))" class="form-control"></select>
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+</form>

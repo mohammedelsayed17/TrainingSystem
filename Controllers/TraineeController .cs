@@ -127,7 +127,11 @@ namespace TrainingSystem.Controllers
                 .FirstOrDefaultAsync(t => t.UserId == userId);
 
             if (trainee == null)
-                return NotFound();
+            {
+                ViewBag.ErrorMessage = "Sorry, trainee information is missing. Please complete your profile or contact the admin.";
+                return View("QRMissing");
+            }
+
 
             string qrText = $"Name: {trainee.Name}, ID: {trainee.Id}, Department: {trainee.Department?.Name}";
             byte[] qrImage = QRCodeHelper.GenerateQRCode(qrText);
@@ -160,6 +164,51 @@ namespace TrainingSystem.Controllers
 
             return File(pdfBytes, "application/pdf", "certificate.pdf");
         }
+        [Authorize(Roles = "Trainee")]
+        public async Task<IActionResult> AddCourse()
+        {
+            var courses = await _context.Courses.ToListAsync();
+            var vm = new AddCourseVM { Courses = courses };
+            return View("AddCourse", vm);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Trainee")]
+        public async Task<IActionResult> AddCourse(AddCourseVM vm)
+        {
+            if (!ModelState.IsValid) return View("AddCourse", vm);
+
+            var user = await _userManager.GetUserAsync(User);
+            var trainee = await _context.Trainees.FirstOrDefaultAsync(t => t.UserId == user.Id);
+            if (trainee == null)
+            {
+                TempData["Error"] = "User not found. Please register again.";
+                return RedirectToAction("Index", "Home"); // أو أي View مناسبة
+            }
+
+            // تحقق من عدم التكرار
+            var exists = await _context.crsResults.AnyAsync(r => r.TraineeId == trainee.Id && r.CourseId == vm.CourseId);
+            if (exists)
+            {
+                ModelState.AddModelError("", "You already registered this course.");
+                vm.Courses = await _context.Courses.ToListAsync();
+                return View("AddCourse", vm);
+            }
+
+            // إضافة الكورس
+            var result = new crsResult
+            {
+                TraineeId = trainee.Id,
+                CourseId = vm.CourseId,
+                Degree = 0 // أو خليها null لو لسه مفيش درجة
+            };
+
+            _context.crsResults.Add(result);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MyCourses", "CrsResult"); // Redirect to MyCourses action in CrsResultController
+        }
+
+
 
 
 
